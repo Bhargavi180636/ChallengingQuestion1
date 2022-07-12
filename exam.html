@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>F1H2O</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="form-container">
+			<div class="wrapper">
+			<form name="form" method="post" action='F1H2O.html' onsubmit= "return FormSubmission();">
+				<div class="inputf">
+					<span>UserName</span>
+					<input type="text" name="" id="username">
+					<span id="usertxt"></span>
+				</div>
+				<div class="inputf">
+					<span>Email</span>
+					<input type="email" name="" id="email" required>
+					<span id="mailtxt"></span>
+				</div>
+				<div class="inputf">
+					<span>Mobile Number</span>
+					<input type="text" name="" id="phn">
+					<span id="phntxt"></span>
+				</div>
+				<div class="inputf">
+					<span>Country</span>
+					<select id="countrylist">
+						<option>India</option>
+						<option>America</option>
+						<option>England</option>
+						<option>Germany</option>
+						<option>RGUKT</option>
+					</select>
+				</div>
+				<div class="inputf">
+					<span>Payment Type</span>
+					<input type="text" name="" id="payment">
+					<span id="paytxt"></span>
+				</div>
+				<div class="inputf">
+					<span>Type of Accommodation</span>
+					<input type="radio" name="accommodation" value="Nuzvid"><label>Nuzvid</label>
+					<input type="radio" name="accommodation" value="IKadapa"><label>IKadapa</label>
+					<input type="radio" name="accommodation" value="ISKLM"><label>ISKLM</label>
+					<input type="radio" name="accommodation" value="IONGLE">
+					<label>IONGLE</label>
+					<span id="radiotxt"></span>
+				</div>
+				<div class="inputf check">
+					<span>Services</span>
+					<input type="checkbox" name="service" value="breakfast"><label>breakfast</label>
+					<input type="checkbox" name="service" value="lunch"><label>lunch</label>
+					<input type="checkbox" name="service" value="snacks"><label>snacks</label>
+					<input type="checkbox" name="service" value="Tea">
+					<label>Tea</label>
+					<input type="checkbox" name="service" value="Coffee">
+					<label>Coffee</label>
+					<input type="checkbox" name="service" value="EGG">
+					<label>EGG</label>
+				</div>
+				<div class="inputf">
+					<span>Number of days staying</span>
+					<input type="number" name="" id="stay">
+					<span id="staytxt"></span>
+				</div>
+				<div class="inputf">
+					<span>Total Cost :</span>
+					<span id="cost"></span>
+				</div>
+				<div>
+					<input type="submit" id="subbtn">
+				</div>
+			</form>
+		</div>
+	</div>
+<script>
+	function FormSubmission(){
+		var usereg = /^[F|f][a-zA-Z]+$/;
+		var mailreg = /[a-zA-Z0-9_*&]+\@[a-zA-Z-.+%^]+\.[a-z]{1,4}$/;
+		var phn1reg = /[0-9]{10}$/;
+		var phn2reg = /\d{4}-\d{4}-\d{4}$/;
+		var username = document.getElementById('username').value;
+		var usertext = document.getElementById('usertxt');
+		var mail =document.getElementById('email').value;
+		var phone =document.getElementById('phn').value;
+		var slctedcountry = document.getElementById('countrylist').value;
+
+		var fee = document.getElementById('payment').value;
+		var dd = /^SBIN[0-9]{7}$/;
+		var acc = /\d{11}$/;
+
+
+		var accommodation = document.form.accommodation;
+		var radiotxt = document.getElementById('radiotxt');
+		// alert(accommodation.checked.value);
+		var stay = document.getElementById('stay').value;
+		var cost = document.getElementById('cost');
+		if(username.length < 4 || username.length >9){
+			usertxt.innerHTML='Please Enter Valid Name!';
+			usertxt.classList.add('error');
+			return false;
+		}
+		if(!usereg.test(username)){
+			usertxt.innerHTML="Must Start with 'F'! ";
+			usertxt.classList.add('error');
+			return false;
+		}
+		if(!isNaN(username)){
+			usertxt.innerHTML='Must be alphabets';
+			usertxt.classList.add('error');
+			return false;
+		}
+		if(!mailreg.test(mail)){
+			document.getElementById('mailtxt').innerHTML = 'Invalid';
+			document.getElementById('mailtxt').classList.add('error');
+			return false;
+		}
+		if(phone == ''){
+			document.getElementById('phntxt').innerHTML ='required';
+			document.getElementById('phntxt').classList.add('error');
+			return false;
+		}
+		if(!phn1reg.test(phone) && !phn2reg.test(phone)){
+			document.getElementById('phntxt').innerHTML = 'Invalid phone number';
+			document.getElementById('phntxt').classList.add('error');
+			return false;
+		}
+		if(!slctedcountry == 'India'){
+			var beer=confirm("Do you want Beer ?");
+			if(beer){
+				alert('Beer Selected!');
+				return true
+			}
+		}
+		if(fee == ''){
+			document.getElementById('paytxt').innerHTML ='required';
+			document.getElementById('paytxt').classList.add('error');
+		}
+		if(!dd.test(fee) && !acc.test(fee)){
+			paytxt.innerHTML='Please enter Valid information!';
+			paytxt.classList.add('error');
+			return false;
+		}
+		for(var i=0;i<accommodation.length;i++){
+			if(accommodation[i].checked ==true){
+				// console.log(accommodation[i]);
+				var accom_value=accommodation[i].value;
+				console.log(accom_value);
+				return true;
+			}
+		}
+		radiotxt.innerHTML = 'select any one!';
+		radiotxt.classList.add('error');
+		return false;
+		if(stay == ''){
+			document.getElementById('staytxt').innerHTML = 'required';
+			return false;
+		}
+		if(stay<=2 && (accom_value == 'Nuzvid' || accom_value == 'IKadapa')){
+			cost.innerHTML = 'Rs .2000/-';
+		}
+		if(stay<=2 && (accom_value == 'ISKLM' || accom_value == 'IONGLE')){
+			cost.innerHTML = 'Rs .3000/-';
+		}
+		return false;
+
+	}
+	let arr=[{img:'url(2.jpg)'},{img:'url(3.jpg)'},{img:'url(4.jpg)'},{img:'url(sea.jpg)'}];
+	var i=0;
+	var bg = document.querySelector('.form-container');
+	function ChangeBg(){
+		console.log('ji');
+		bg.style.backgroundColor = 'linear-gradient(rgba(0,0,0,0.9),rgba(0,0,0,0.9))';
+		bg.style.backgroundImage = arr[i].img;
+		if(i<arr.length-1){
+			i++;
+		}
+		else{
+			i=0;
+		}
+	}
+	setInterval(ChangeBg,2000);
+	window.onload=ChangeBg;
+</script>
+</body>
+</html>
